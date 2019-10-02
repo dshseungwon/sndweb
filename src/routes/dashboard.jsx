@@ -18,21 +18,21 @@ import Maps from "views/Maps/Maps.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 import Test from "views/Test/Test.jsx";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.jsx";
-import Portfolio from "../views/Port/Portfolio";
+import Scoring from "../views/Scoring/Scoring";
 import Discover from "../views/Discover/Discover";
 
 const dashboardRoutes = [
   {
     path: "/scoring",
     sidebarName: "Scoring",
-    navbarName: "Scoring",
+    navbarName: "스코어링 시트",
     icon: "content_paste",
-    component: Portfolio
+    component: Scoring
   },
   {
     path: "/dashboard",
     sidebarName: "Dashboard",
-    navbarName: "Dashboard",
+    navbarName: "대쉬보드",
     icon: Dashboard,
     component: Test
   },

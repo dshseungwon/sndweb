@@ -22,10 +22,11 @@
     "react-google-maps": "9.4.5",
     "react-router-dom": "4.3.1",
     "react-scripts": "1.1.5",
-    "react-tree-graph": "^3.2.0",
     "react-swipe": "^6.0.4",
     "react-swipeable-views": "^0.13.1",
-    "react-swipeable-views-utils": "^0.13.1"
+    "react-swipeable-views-utils": "^0.13.1",
+    "react-tree-graph": "^3.2.0",
+    "survey-react": "^1.1.14"
   },
   "scripts": {
     "start": "react-scripts start",
