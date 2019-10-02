@@ -1,7 +1,7 @@
 {
-  "name": "Madcamp_Week4",
+  "name": "S&D SESSION",
   "version": "1.5.0",
-  "description": "Madcamp Wee4 Project. Seungwon Ju & Suhyun Lee",
+  "description": "S&D Session website. by Seungwon Ju & Suhyun Lee",
   "private": false,
   "main": "dist/index.js",
   "dependencies": {
@@ -40,7 +40,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MadCampJL/Week4"
+    "url": "git+https://github.com/dshseungwon/sndweb"
   },
   "keywords": [],
   "author": "Seungwon Ju & Suhyun Lee",

@@ -5,12 +5,14 @@ import "firebase/firestore";
 import "firebase/storage";
 
 let config = {
-  apiKey: "AIzaSyBu6shvyujL6MApuB2DWu-_q2QW__c13sw",
-  authDomain: "madcampjl.firebaseapp.com",
-  databaseURL: "https://madcampjl.firebaseio.com",
-  projectId: "madcampjl",
-  storageBucket: "madcampjl.appspot.com",
-  messagingSenderId: "14346225545"
+  apiKey: "AIzaSyAwgy6w7sQIJeRSMlwZ9THhJpcYUhlSYiI",
+  authDomain: "snd-session.firebaseapp.com",
+  databaseURL: "https://snd-session.firebaseio.com",
+  projectId: "snd-session",
+  storageBucket: "snd-session.appspot.com",
+  messagingSenderId: "738261258727",
+  appId: "1:738261258727:web:9e0b91e57804dc37af2d42",
+  measurementId: "G-PFRYKHNVBQ"
 };
 
 class Firebase {
