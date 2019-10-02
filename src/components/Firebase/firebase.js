@@ -44,11 +44,12 @@ class Firebase {
   user = uid => this.db.collection('users').doc(uid);
   users = () => this.db.collection('users');
 
-  doRecordUser = (authUser, email, password) => 
+  doRecordUser = (authUser, email, password, name) => 
     this.user(authUser.user.uid)
         .set({
           email,
           password,
+          name,
         })
         .then(()=>{
           console.log('New user added to database!');

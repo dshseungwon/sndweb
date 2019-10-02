@@ -23,14 +23,14 @@ import Discover from "../views/Discover/Discover";
 
 const dashboardRoutes = [
   {
-    path: "/portfolio",
+    path: "/scoring",
     sidebarName: "Scoring",
     navbarName: "Scoring",
     icon: "content_paste",
     component: Portfolio
   },
   {
-    path: "/explore",
+    path: "/dashboard",
     sidebarName: "Dashboard",
     navbarName: "Dashboard",
     icon: Dashboard,
@@ -100,7 +100,7 @@ const dashboardRoutes = [
   //   icon: Unarchive,
   //   component: UpgradeToPro
   // },
-  { redirect: true, path: "/", to: "/explore", navbarName: "Redirect" }
+  { redirect: true, path: "/", to: "/scoring", navbarName: "Redirect" }
 ];
 
 export default dashboardRoutes;

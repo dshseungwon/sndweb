@@ -22,7 +22,9 @@ import { withFirebase } from "../Firebase";
 const INITIAL_STATE = {
   email: "",
   password: "",
-  error: ""
+  name:"",
+  error: "",
+  isSignup: false,
 };
 
 class SignInDialog extends React.Component {
@@ -48,13 +50,19 @@ class SignInDialog extends React.Component {
   handleSignUp = (e) => {
     e.preventDefault();
 
-    const { email, password } = this.state;
-    
+    if (this.state.isSignup == false)
+    {
+      this.setState({isSignup: true, error: {message: "이름도 입력해주세요 :)"}});
+      return;
+    }
+  
+    const { email, password, name } = this.state;
+
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, password)
       .then(authUser => {
         this.props.firebase
-          .doRecordUser(authUser, email, password);
+          .doRecordUser(authUser, email, password, name);
         this.handleClose();
       })
       .catch(error => {
@@ -100,18 +108,27 @@ class SignInDialog extends React.Component {
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="display2">
-                Sign in
+                S&D 세션
               </Typography>
 
               <form className={classes.form}>
+
                 <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="email">Email Address</InputLabel>
                   <Input onChange={this.handleChange} id="email" name="email" autoComplete="email" autoFocus />
                 </FormControl>
+              
                 <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="password">Password</InputLabel>
                   <Input onChange={this.handleChange} name="password" type="password" id="password" autoComplete="current-password" />
                 </FormControl>
+
+                {this.state.isSignup ?
+                <FormControl margin="normal" required fullWidth>
+                  <InputLabel htmlFor="name">Name</InputLabel>
+                  <Input onChange={this.handleChange} id="name" name="name" autoComplete="name"/>
+                </FormControl> : ''
+                }
 
                 <Typography component="h1" color="error">
                   {this.state.error ? this.state.error.message : "" }

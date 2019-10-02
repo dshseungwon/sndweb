@@ -76,8 +76,8 @@ class UserInfoDialog extends React.Component {
               <Avatar className={classes.avatar}>
                 <LockOutlinedIcon />
               </Avatar>
-              <Typography component="h1" variant="display2">
-                Welcome!
+              <Typography component="h6" variant="display2">
+                S&D {this.state.name}
               </Typography>
               <TextField
                 id="outlined-userinfo-email"
