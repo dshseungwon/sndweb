@@ -40,8 +40,8 @@ function Footer({ ...props }) {
           <span>
             &copy; {1900 + new Date().getYear()}{" "}
             <a href="" className={classes.a}>
-              SeungWon and Soohyeon
-            </a>, made with blood and sweat
+              Seungwon Ju & Soohyeon Lee
+            </a>
           </span>
         </p>
       </div>

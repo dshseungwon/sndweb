@@ -20,6 +20,7 @@ import Test from "views/Test/Test.jsx";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.jsx";
 import Scoring from "../views/Scoring/Scoring";
 import Discover from "../views/Discover/Discover";
+import Attendance from "../views/Attendance/Attendance";
 
 const dashboardRoutes = [
   {
@@ -36,13 +37,13 @@ const dashboardRoutes = [
     icon: Dashboard,
     component: Test
   },
-  // {
-  //   path: "/discover",
-  //   sidebarName: "Discover",
-  //   navbarName: "Discover",
-  //   icon: BlurOn,
-  //   component: Discover
-  // },
+  {
+    path: "/attendance",
+    sidebarName: "Attendance",
+    navbarName: "출석",
+    icon: Person,
+    component: Attendance
+  },
 
   // {
   //   path: "/dashboard",
