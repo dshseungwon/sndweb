@@ -141,8 +141,7 @@ class Scoring extends React.Component {
         "name": "question2",
         "title": "문제 진단",
         "description": {
-         "default": "▶ 상황 이해 \t\t            - 자사 및 시장에 대해 깊게 이해하고 다각도로 진단하였는가?\n\n▶ 문제 상황/목표 제시   - 진단한 문제 상황에 적절한 목표를 논리적으로 제시하였는가?\n                                   - 문제 상황과 목표 설정을 명확하게 하였는가?\n\n▶ MECE \t\t             - 문제 분석과 전략 도출 위해 잘 구조화하여 분석하였는가?\n                                             - deep dive가 실현되었는가?\n\t\t\t\t              (*deep dive: 추후 논리를 전개하는 데 필요한 수준까지 요소들을\n\t\t\t\t               break down 하는 것)\n",
-         "ko": " "
+         "default": "",
         },
         "isRequired": true,
         "columns": [

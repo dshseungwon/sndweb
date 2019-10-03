@@ -26,7 +26,7 @@ const Sidebar = ({ ...props }) => {
     <List className={classes.list}>
       {routes.map((prop, key) => {
         if (prop.redirect) return null;
-        if (prop.path === "/attendance") return null;
+        if (prop.path === "/attendance/:sessionId") return null;
         var activePro = " ";
         var listItemClasses;
         if (prop.path === "/upgrade-to-pro") {

@@ -38,12 +38,13 @@ const dashboardRoutes = [
     component: Test
   },
   {
-    path: "/attendance",
+    path: "/attendance/:sessionId",
     sidebarName: "Attendance",
     navbarName: "출석",
     icon: Person,
     component: Attendance
   },
+
 
   // {
   //   path: "/dashboard",
