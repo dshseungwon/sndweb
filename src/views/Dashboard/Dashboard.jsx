@@ -49,12 +49,18 @@ class Dashboard extends React.Component {
     name: "",
     email: "",
     password: "",
-    value: 0
+    loading: false,
   };
 
+  _myScoredSheets = [];
 
+  S_mean = 0;
+  C_mean = 0;
+  Q_mean = 0;
+  A_mean = 0;
 
   componentDidMount() {
+    this._myScoredSheets = [];
     this.listner = this.props.firebase.auth.onAuthStateChanged(
       authUser => {
         if(authUser) {
@@ -67,6 +73,15 @@ class Dashboard extends React.Component {
                 password: userDoc.password,
               });
               console.log(this.state.name);
+
+              let myScoredDocsRef = this.props.firebase.db.collection('my_scored').doc(userDoc.name).collection("scoring");
+              myScoredDocsRef.get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                  this.setState({loading: true});
+                  this._myScoredSheets.push(doc.data());
+                  this.setState({loading: false});
+                })
+              })
             })
             .catch(() => {
               this.setState({
@@ -136,45 +151,69 @@ class Dashboard extends React.Component {
     if (this.state.name === "") {
       return <h1>대쉬보드 확인을 위해 로그인 해주세요 :)</h1>;
     } else {
+      this.S_mean = 0;
+      this.C_mean = 0;
+      this.Q_mean = 0;
+      this.A_mean = 0;
+      
+      this._myScoredSheets.map((obj) => {
+        this.S_mean += obj.SM;
+        this.C_mean += obj.CM;
+        this.Q_mean += obj.QM;
+        this.A_mean += obj.AM;
+      });
+
+      if (this.S_mean != 0 || this._myScoredSheets.length != 0)
+        this.S_mean /= this._myScoredSheets.length;
+      if (this.C_mean != 0 || this._myScoredSheets.length != 0)
+        this.C_mean /= this._myScoredSheets.length;
+      if (this.Q_mean != 0 || this._myScoredSheets.length != 0)
+      this.Q_mean /= this._myScoredSheets.length;
+      if (this.A_mean != 0 || this._myScoredSheets.length != 0)
+      this.A_mean /= this._myScoredSheets.length;
+
+
       return (
         <div>
           <GridContainer>
             <GridItem xs={12} sm={6} md={3}>
               <Card>
-                <CardHeader color="warning" stats icon>
-                  <CardIcon color="warning">
+                <CardHeader color="success" stats icon>
+                  <CardIcon color="success">
                     <Icon>content_copy</Icon>
                   </CardIcon>
-                  <p className={classes.cardCategory}>Used Space</p>
+                  <p className={classes.cardCategory}>문제 진단</p>
                   <h3 className={classes.cardTitle}>
-                    49/50 <small>GB</small>
+                    {this.S_mean.toFixed(2)} <small>점</small>
                   </h3>
                 </CardHeader>
                 <CardFooter stats>
                   <div className={classes.stats}>
-                    <Danger>
+                    {/* <Danger>
                       <Warning />
                     </Danger>
                     <a href="#pablo" onClick={e => e.preventDefault()}>
                       Get more space
-                    </a>
+                    </a> */}
                   </div>
                 </CardFooter>
               </Card>
             </GridItem>
             <GridItem xs={12} sm={6} md={3}>
               <Card>
-                <CardHeader color="success" stats icon>
-                  <CardIcon color="success">
+                <CardHeader color="warning" stats icon>
+                  <CardIcon color="warning">
                     <Store />
                   </CardIcon>
-                  <p className={classes.cardCategory}>Revenue</p>
-                  <h3 className={classes.cardTitle}>$34,245</h3>
+                  <p className={classes.cardCategory}>전략 도출</p>
+                  <h3 className={classes.cardTitle}>
+                  {this.C_mean.toFixed(2)} <small>점</small>
+                  </h3>
                 </CardHeader>
                 <CardFooter stats>
                   <div className={classes.stats}>
-                    <DateRange />
-                    Last 24 Hours
+                    {/* <DateRange />
+                    Last 24 Hours */}
                   </div>
                 </CardFooter>
               </Card>
@@ -185,13 +224,15 @@ class Dashboard extends React.Component {
                   <CardIcon color="danger">
                     <Icon>info_outline</Icon>
                   </CardIcon>
-                  <p className={classes.cardCategory}>Fixed Issues</p>
-                  <h3 className={classes.cardTitle}>75</h3>
+                  <p className={classes.cardCategory}>Overview</p>
+                  <h3 className={classes.cardTitle}>
+                  {this.Q_mean.toFixed(2)} <small>점</small>
+                  </h3>
                 </CardHeader>
                 <CardFooter stats>
                   <div className={classes.stats}>
-                    <LocalOffer />
-                    Tracked from Github
+                    {/* <LocalOffer />
+                    Tracked from Github */}
                   </div>
                 </CardFooter>
               </Card>
@@ -202,20 +243,23 @@ class Dashboard extends React.Component {
                   <CardIcon color="info">
                     <Accessibility />
                   </CardIcon>
-                  <p className={classes.cardCategory}>Followers</p>
-                  <h3 className={classes.cardTitle}>+245</h3>
+                  <p className={classes.cardCategory}>Communication</p>
+                  <h3 className={classes.cardTitle}>
+                  {this.A_mean.toFixed(2)} <small>점</small>
+                  </h3>
                 </CardHeader>
                 <CardFooter stats>
                   <div className={classes.stats}>
-                    <Update />
-                    Just Updated
+                    {/* <Update />
+                    Just Updated */}
                   </div>
                 </CardFooter>
               </Card>
             </GridItem>
           </GridContainer>
+        
           <GridContainer>
-            <GridItem xs={12} sm={12} md={4}>
+            <GridItem xs={12} sm={12} md={6}>
               <Card chart>
                 <CardHeader color="success">
                   <ChartistGraph
@@ -227,22 +271,22 @@ class Dashboard extends React.Component {
                   />
                 </CardHeader>
                 <CardBody>
-                  <h4 className={classes.cardTitle}>Daily Sales</h4>
+                  <h4 className={classes.cardTitle}>문제 진단</h4>
                   <p className={classes.cardCategory}>
-                    <span className={classes.successText}>
+                    {/* <span className={classes.successText}>
                       <ArrowUpward className={classes.upArrowCardCategory} /> 55%
-                    </span>{" "}
-                    increase in today sales.
+                    </span>{" "} */}
+                    상황이해 / 문제상황 및 목표제시 / MECE 측면에서 평가합니다.
                   </p>
                 </CardBody>
-                <CardFooter chart>
+                {/* <CardFooter chart>
                   <div className={classes.stats}>
                     <AccessTime /> updated 4 minutes ago
                   </div>
-                </CardFooter>
+                </CardFooter> */}
               </Card>
             </GridItem>
-            <GridItem xs={12} sm={12} md={4}>
+            <GridItem xs={12} sm={12} md={6}>
               <Card chart>
                 <CardHeader color="warning">
                   <ChartistGraph
@@ -255,19 +299,19 @@ class Dashboard extends React.Component {
                   />
                 </CardHeader>
                 <CardBody>
-                  <h4 className={classes.cardTitle}>Email Subscriptions</h4>
+                  <h4 className={classes.cardTitle}>전략 도출</h4>
                   <p className={classes.cardCategory}>
-                    Last Campaign Performance
+                    가능성 / 효과 / 구체화 측면에서 평가합니다.
                   </p>
                 </CardBody>
-                <CardFooter chart>
+                {/* <CardFooter chart>
                   <div className={classes.stats}>
                     <AccessTime /> campaign sent 2 days ago
                   </div>
-                </CardFooter>
+                </CardFooter> */}
               </Card>
             </GridItem>
-            <GridItem xs={12} sm={12} md={4}>
+            <GridItem xs={12} sm={12} md={6}>
               <Card chart>
                 <CardHeader color="danger">
                   <ChartistGraph
@@ -279,64 +323,47 @@ class Dashboard extends React.Component {
                   />
                 </CardHeader>
                 <CardBody>
-                  <h4 className={classes.cardTitle}>Completed Tasks</h4>
+                  <h4 className={classes.cardTitle}>Overview</h4>
                   <p className={classes.cardCategory}>
-                    Last Campaign Performance
+                    Storyline 및 Flow / Reasoning 측면에서 평가합니다.
                   </p>
                 </CardBody>
-                <CardFooter chart>
+                {/* <CardFooter chart>
                   <div className={classes.stats}>
                     <AccessTime /> campaign sent 2 days ago
                   </div>
-                </CardFooter>
+                </CardFooter> */}
+              </Card>
+            </GridItem>
+            <GridItem xs={12} sm={12} md={6}>
+              <Card chart>
+                <CardHeader color="info">
+                  <ChartistGraph
+                    className="ct-chart"
+                    data={completedTasksChart.data}
+                    type="Line"
+                    options={completedTasksChart.options}
+                    listener={completedTasksChart.animation}
+                  />
+                </CardHeader>
+                <CardBody>
+                  <h4 className={classes.cardTitle}>Communication</h4>
+                  <p className={classes.cardCategory}>
+                    덱 / 발표 / Q&A 측면에서 평가합니다.
+                  </p>
+                </CardBody>
+                {/* <CardFooter chart>
+                  <div className={classes.stats}>
+                    <AccessTime /> campaign sent 2 days ago
+                  </div>
+                </CardFooter> */}
               </Card>
             </GridItem>
           </GridContainer>
           <GridContainer>
-            <GridItem xs={12} sm={12} md={6}>
-              <CustomTabs
-                title="Tasks:"
-                headerColor="primary"
-                tabs={[
-                  {
-                    tabName: "Bugs",
-                    tabIcon: BugReport,
-                    tabContent: (
-                      <Tasks
-                        checkedIndexes={[0, 3]}
-                        tasksIndexes={[0, 1, 2, 3]}
-                        tasks={bugs}
-                      />
-                    )
-                  },
-                  {
-                    tabName: "Website",
-                    tabIcon: Code,
-                    tabContent: (
-                      <Tasks
-                        checkedIndexes={[0]}
-                        tasksIndexes={[0, 1]}
-                        tasks={website}
-                      />
-                    )
-                  },
-                  {
-                    tabName: "Server",
-                    tabIcon: Cloud,
-                    tabContent: (
-                      <Tasks
-                        checkedIndexes={[1]}
-                        tasksIndexes={[0, 1, 2]}
-                        tasks={server}
-                      />
-                    )
-                  }
-                ]}
-              />
-            </GridItem>
-            <GridItem xs={12} sm={12} md={6}>
+            <GridItem xs={12} sm={12} md={12}>
               <Card>
-                <CardHeader color="warning">
+                <CardHeader color="rose">
                   <h4 className={classes.cardTitleWhite}>Employees Stats</h4>
                   <p className={classes.cardCategoryWhite}>
                     New employees on 15th September, 2016
@@ -368,3 +395,50 @@ Dashboard.propTypes = {
 };
 
 export default withFirebase(withStyles(dashboardStyle)(Dashboard));
+
+
+
+
+
+
+          // <GridItem xs={12} sm={12} md={6}>
+          //     <CustomTabs
+          //       title="Tasks:"
+          //       headerColor="primary"
+          //       tabs={[
+          //         {
+          //           tabName: "Bugs",
+          //           tabIcon: BugReport,
+          //           tabContent: (
+          //             <Tasks
+          //               checkedIndexes={[0, 3]}
+          //               tasksIndexes={[0, 1, 2, 3]}
+          //               tasks={bugs}
+          //             />
+          //           )
+          //         },
+          //         {
+          //           tabName: "Website",
+          //           tabIcon: Code,
+          //           tabContent: (
+          //             <Tasks
+          //               checkedIndexes={[0]}
+          //               tasksIndexes={[0, 1]}
+          //               tasks={website}
+          //             />
+          //           )
+          //         },
+          //         {
+          //           tabName: "Server",
+          //           tabIcon: Cloud,
+          //           tabContent: (
+          //             <Tasks
+          //               checkedIndexes={[1]}
+          //               tasksIndexes={[0, 1, 2]}
+          //               tasks={server}
+          //             />
+          //           )
+          //         }
+          //       ]}
+          //     />
+          //   </GridItem>
