@@ -9,18 +9,9 @@ import Notifications from "@material-ui/icons/Notifications";
 import Unarchive from "@material-ui/icons/Unarchive";
 import BlurOn from "@material-ui/icons/BlurOn";
 // core components/views
-import DashboardPage from "views/Dashboard/Dashboard.jsx";
-import UserProfile from "views/UserProfile/UserProfile.jsx";
-import TableList from "views/TableList/TableList.jsx";
-import Typography from "views/Typography/Typography.jsx";
-import Icons from "views/Icons/Icons.jsx";
-import Maps from "views/Maps/Maps.jsx";
-import NotificationsPage from "views/Notifications/Notifications.jsx";
-import Test from "views/Test/Test.jsx";
-import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.jsx";
 import Scoring from "../views/Scoring/Scoring";
-import Discover from "../views/Discover/Discover";
 import Attendance from "../views/Attendance/Attendance";
+import DashboardView from "../views/Dashboard/Dashboard";
 
 const dashboardRoutes = [
   {
@@ -35,7 +26,7 @@ const dashboardRoutes = [
     sidebarName: "Dashboard",
     navbarName: "대쉬보드",
     icon: Dashboard,
-    component: Test
+    component: DashboardView
   },
   {
     path: "/attendance/:sessionId",
