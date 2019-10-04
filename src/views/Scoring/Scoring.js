@@ -85,6 +85,8 @@ class Scoring extends React.Component {
       "eval_name": this.state.name,
       "eval_uid": this.state.uid,
 
+      "Session": sd.Session,
+
       "P": sd.P,
 
       "S1": parseFloat(sd.S.S1),

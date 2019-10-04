@@ -94,7 +94,7 @@ class UserInfoDialog extends React.Component {
               <TextField
                 id="outlined-userinfo-password"
                 label="password"
-                defaultValue={password}
+                defaultValue="********"
                 className={classes.textField}
                 margin="normal"
                 fullWidth

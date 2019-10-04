@@ -35,7 +35,8 @@ import { bugs, website, server } from "variables/general.jsx";
 import {
   dailySalesChart,
   emailsSubscriptionChart,
-  completedTasksChart
+  completedTasksChart,
+  communicationChart,
 } from "variables/charts.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
@@ -59,6 +60,8 @@ class Dashboard extends React.Component {
   Q_mean = 0;
   A_mean = 0;
 
+  commentTable = [];
+
   componentDidMount() {
     this._myScoredSheets = [];
     this.listner = this.props.firebase.auth.onAuthStateChanged(
@@ -72,7 +75,6 @@ class Dashboard extends React.Component {
                 email: userDoc.email,
                 password: userDoc.password,
               });
-              console.log(this.state.name);
 
               let myScoredDocsRef = this.props.firebase.db.collection('my_scored').doc(userDoc.name).collection("scoring");
               myScoredDocsRef.get().then((querySnapshot) => {
@@ -155,12 +157,20 @@ class Dashboard extends React.Component {
       this.C_mean = 0;
       this.Q_mean = 0;
       this.A_mean = 0;
+
+      this.commentTable = [];
       
-      this._myScoredSheets.map((obj) => {
+      this._myScoredSheets.map((obj, index) => {
         this.S_mean += obj.SM;
         this.C_mean += obj.CM;
         this.Q_mean += obj.QM;
         this.A_mean += obj.AM;
+
+        this.commentTable.push([index.toString(), "정규 3차 세션", "문제 진단", obj.SS]);
+        this.commentTable.push([index.toString(), "정규 3차 세션", "전략 도출", obj.CC]);
+        this.commentTable.push([index.toString(), "정규 3차 세션", "Overview", obj.QQ]);
+        this.commentTable.push([index.toString(), "정규 3차 세션", "Communication", obj.AA]);
+        this.commentTable.push([index.toString(), "정규 3차 세션", "기타", obj.EE]);
       });
 
       if (this.S_mean != 0 || this._myScoredSheets.length != 0)
@@ -292,9 +302,9 @@ class Dashboard extends React.Component {
                   <ChartistGraph
                     className="ct-chart"
                     data={emailsSubscriptionChart.data}
-                    type="Bar"
+                    type="Line"
                     options={emailsSubscriptionChart.options}
-                    responsiveOptions={emailsSubscriptionChart.responsiveOptions}
+                    // responsiveOptions={emailsSubscriptionChart.responsiveOptions}
                     listener={emailsSubscriptionChart.animation}
                   />
                 </CardHeader>
@@ -340,10 +350,10 @@ class Dashboard extends React.Component {
                 <CardHeader color="info">
                   <ChartistGraph
                     className="ct-chart"
-                    data={completedTasksChart.data}
+                    data={communicationChart.data}
                     type="Line"
-                    options={completedTasksChart.options}
-                    listener={completedTasksChart.animation}
+                    options={communicationChart.options}
+                    listener={communicationChart.animation}
                   />
                 </CardHeader>
                 <CardBody>
@@ -364,21 +374,16 @@ class Dashboard extends React.Component {
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="rose">
-                  <h4 className={classes.cardTitleWhite}>Employees Stats</h4>
+                  <h4 className={classes.cardTitleWhite}>Comments</h4>
                   <p className={classes.cardCategoryWhite}>
-                    New employees on 15th September, 2016
+                    세션에 대한 상세한 Comment 입니다.
                   </p>
                 </CardHeader>
                 <CardBody>
                   <Table
-                    tableHeaderColor="warning"
-                    tableHead={["ID", "Name", "Salary", "Country"]}
-                    tableData={[
-                      ["1", "Dakota Rice", "$36,738", "Niger"],
-                      ["2", "Minerva Hooper", "$23,789", "Curaçao"],
-                      ["3", "Sage Rodriguez", "$56,142", "Netherlands"],
-                      ["4", "Philip Chaney", "$38,735", "Korea, South"]
-                    ]}
+                    tableHeaderColor="rose"
+                    tableHead={["ID", "Session", "Type", "Content"]}
+                    tableData={this.commentTable}
                   />
                 </CardBody>
               </Card>

@@ -4,6 +4,46 @@ export default {
    {
     "name": "page1",
     "elements": [
+      {
+        "type": "dropdown",
+        "name": "Session",
+        "title": {
+         "ko": "세션 선택"
+        },
+        "isRequired": true,
+        "choices": [
+         {
+          "value": "2차",
+          "text": {
+           "ko": "정규 2차 세션 (9.28, 고려대)"
+          }
+         },
+         {
+          "value": "3차",
+          "text": {
+           "ko": "정규 3차 세션 (10.05, 서울대)"
+          }
+         },
+         {
+          "value": "5차",
+          "text": {
+           "ko": "정규 5차 세션 (11.02, 연세대)"
+          }
+         },
+         {
+          "value": "6차",
+          "text": {
+           "ko": "정규 6차 세션 (11.09, 고려대)"
+          }
+         },
+         {
+          "value": "7차",
+          "text": {
+           "ko": "정규 7차 세션 (11.16, 고려대)"
+          }
+         }
+        ]
+       },
      {
       "type": "checkbox",
       "name": "P",
