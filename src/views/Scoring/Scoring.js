@@ -73,46 +73,49 @@ class Scoring extends React.Component {
         }
       }
     )
-
-    // this.listner = this.props.firebase.auth.onAuthStateChanged(
-    //   authUser => {
-    //     if(authUser) {
-    //       db.collection("works")
-    //         .where("isRecent", "==", true)
-    //         .where("owner", "==", authUser.uid)
-    //         .get()
-    //         .then(
-    //           function(querySnapshot) {
-    //             querySnapshot.forEach(function(doc) {
-    //               let tempdata = doc.data();
-    //               tempdata.id = doc.id;
-    //               workArray.push(tempdata);
-    //               console.log(doc.id, " => ", tempdata);
-    //             });
-    //             this.setState({ loading: false });
-    //           }.bind(this)
-    //         )
-    //         .catch(function(error) {
-    //           console.log("Error getting documents: ", error);
-    //   });
-    //     } else {
-    //       workArray = [];
-    //       this.setState({
-    //         authUser: null,
-    //       });
-    //     }
-    //   }
-    // );
   }
 
   //Define a callback methods on survey complete
   onComplete = (survey, options) => {
     //Write survey results into database
 
+    var sd = survey.data;
+
     var surveyResult = {
       "eval_name": this.state.name,
       "eval_uid": this.state.uid,
-      ...survey.data}
+
+      "P": sd.P,
+
+      "S1": parseFloat(sd.S.S1),
+      "S2": parseFloat(sd.S.S2),
+      "S3": parseFloat(sd.S.S3),
+      "SS": sd.SS,
+
+      "SM": ((parseFloat(sd.S.S1) + parseFloat(sd.S.S2) + parseFloat(sd.S.S3)) / 3),
+
+      "C1": parseFloat(sd.C.C1),
+      "C2": parseFloat(sd.C.C2),
+      "C3": parseFloat(sd.C.C3),
+      "CC": sd.CC,
+
+      "CM": ((parseFloat(sd.C.C1) + parseFloat(sd.C.C2) + parseFloat(sd.C.C3)) / 3),
+
+      "Q1": parseFloat(sd.Q.Q1),
+      "Q2": parseFloat(sd.Q.Q2),
+      "QQ": sd.QQ,
+
+      "QM": ((parseFloat(sd.Q.Q1) + parseFloat(sd.Q.Q2)) / 2),
+
+      "A1": parseFloat(sd.A.A1),
+      "A2": parseFloat(sd.A.A2),
+      "A3": parseFloat(sd.A.A3),
+      "AA": sd.AA,
+
+      "AM": ((parseFloat(sd.A.A1) + parseFloat(sd.A.A2) + parseFloat(sd.A.A3)) / 3),
+
+      "EE": sd.EE,
+    }
 
       //upload logic
       let scoringRef = this.props.firebase.db.collection('scoring');
@@ -134,8 +137,7 @@ class Scoring extends React.Component {
               console.log(error);
             })
 
-            console.log(surveyResult.Question1);
-            surveyResult.Question1.map((name) => {
+            surveyResult.P.map((name) => {
               myScoredRef.doc(name).collection('scoring').doc(docRef.id).set({
                 ...surveyResult
               })
