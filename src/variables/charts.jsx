@@ -17,8 +17,8 @@ var delays2 = 80,
 
 const dailySalesChart = {
   data: {
-    labels: ["2차", "2차", "5차", "6차", "7차"],
-    series: [[1.5,4,2,5.6,3]],
+    labels: ["1차", "2차", "3차", "4차", "5차", "6차"],
+    series: [[0,0,2,0,0],[1.2,2,4,6,7],[0,0,6,0,0]],
   },
   options: {
     lineSmooth: Chartist.Interpolation.cardinal({
@@ -71,7 +71,7 @@ const dailySalesChart = {
 
 const emailsSubscriptionChart = {
   data: {
-    labels: ["2차", "2차", "5차", "6차", "7차"],
+    labels: ["1차", "2차", "3차", "4차", "5차", "6차"],
     series: [[4,2,1,5,7]],
   },
   options: {
@@ -125,7 +125,7 @@ const emailsSubscriptionChart = {
 
 const completedTasksChart = {
   data: {
-    labels: ["2차", "2차", "5차", "6차", "7차"],
+    labels: ["1차", "2차", "3차", "4차", "5차", "6차"],
     series: [[6.5,5,4,2.4,6]],
   },
   options: {
@@ -178,7 +178,7 @@ const completedTasksChart = {
 
 const communicationChart = {
   data: {
-    labels: ["2차", "2차", "5차", "6차", "7차"],
+    labels: ["1차", "2차", "3차", "4차", "5차", "6차"],
     series: [[2,4,6.5,4,1.5]],
   },
   options: {
