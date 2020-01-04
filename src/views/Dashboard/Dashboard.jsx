@@ -126,7 +126,6 @@ class Dashboard extends React.Component {
                 uid: authUser.uid,
                 name: userDoc.name,
                 email: userDoc.email,
-                password: userDoc.password,
               });
 
               let myScoredDocsRef = this.props.firebase.db.collection('my_scored').doc(userDoc.name).collection("scoring");

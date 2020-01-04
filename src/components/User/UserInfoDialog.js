@@ -38,7 +38,6 @@ class UserInfoDialog extends React.Component {
               this.setState({
                 name: userDoc.name,
                 email: userDoc.email,
-                password: userDoc.password,
               });
             })
             .catch(() => {

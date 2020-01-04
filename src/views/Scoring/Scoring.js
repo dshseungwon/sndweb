@@ -49,7 +49,6 @@ class Scoring extends React.Component {
                 uid: authUser.uid,
                 name: userDoc.name,
                 email: userDoc.email,
-                password: userDoc.password,
               });
               console.log(this.state.name);
             })
@@ -123,30 +122,48 @@ class Scoring extends React.Component {
       let scoringRef = this.props.firebase.db.collection('scoring');
       let myScoredRef = this.props.firebase.db.collection('my_scored');
       let myScoringRef = this.props.firebase.db.collection('my_scoring');
+      let statRef = this.props.firebase.db.collection('stat');
 
       scoringRef.add({})
         .then((docRef) => {
+
           docRef.set({
             ...surveyResult
           })
           .catch((error) => {
             console.log(error);
           })
-            myScoringRef.doc(this.state.name).collection('scoring').doc(docRef.id).set({
+
+          myScoringRef.doc(this.state.name).collection('scoring').doc(docRef.id).set({
+            ...surveyResult
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+
+          statRef.doc(this.state.name).collection(surveyResult.Session+'차').doc('작성한피드백').collection('scoring').doc(docRef.id).set({
+            ...surveyResult
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+
+          surveyResult.P.map((name) => {
+            myScoredRef.doc(name).collection('scoring').doc(docRef.id).set({
               ...surveyResult
             })
             .catch((error) => {
               console.log(error);
             })
 
-            surveyResult.P.map((name) => {
-              myScoredRef.doc(name).collection('scoring').doc(docRef.id).set({
-                ...surveyResult
-              })
-              .catch((error) => {
-                console.log(error);
-              })
+            statRef.doc(name).collection(surveyResult.Session+'차').doc('받은피드백').collection('scoring').doc(docRef.id).set({
+              ...surveyResult
             })
+            .catch((error) => {
+              console.log(error);
+            })
+          })
+
           })
           .catch((error) => {
             console.log(error);

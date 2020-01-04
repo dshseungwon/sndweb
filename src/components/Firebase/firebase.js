@@ -48,7 +48,6 @@ class Firebase {
     this.user(authUser.user.uid)
         .set({
           email,
-          password,
           name,
         })
         .then(()=>{
